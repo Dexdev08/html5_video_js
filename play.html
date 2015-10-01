@@ -1,0 +1,44 @@
+<head>
+</head>
+<body>
+    <video id = "my-video" width = "800" height="600" controls>
+        <source src= "" type="video/mp4">
+    </video>
+<script type = "text/javascript">
+    document.getElementById("my-video").playbackRate= 1;
+    var button = document.createElement("button");
+    button.innerHTML = "faster";
+    var body = document.getElementsByTagName("body")[0];
+    body.appendChild(button);
+    button.addEventListener("click", function()
+    {
+        document.getElementById("my-video").playbackRate = document.getElementById("my-video").playbackRate + .5;
+    });
+</script>
+
+<input type="file" id ="files" name="files[]" multiple/>
+<output id="list"></output>
+<script>
+    function handleFileSelect(evt)
+    {
+        var files = evt.target.files;
+
+        var output = [];
+        for (var i = 0,f; f=files[i]; i++)
+        {
+            output.push('<li><strong>', escape(f.name), '</strong> (', f.type||'n/a', ') - ', f.size, ' bytes </li>');
+
+        var source = document.getElementById("my-video").getElementsByTagName("source")[0];
+        source.setAttribute("src",escape(f.name));
+        document.getElementById("my-video").load();
+        document.getElementById("my-video").play();
+        }
+
+        document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    }
+
+
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+</script>
+</body>
